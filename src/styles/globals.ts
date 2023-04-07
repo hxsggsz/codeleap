@@ -19,7 +19,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     width: 100vw;
-    height: 100vh;
     /* scrollbar */
     &::-webkit-scrollbar {
       width: 7px;
@@ -28,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     &::-webkit-scrollbar-thumb {
-      background: var(--white);
+      background: var(--blue);
       border-radius: 4px;
     }         
   }

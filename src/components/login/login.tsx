@@ -16,19 +16,14 @@ export const Login = () => {
     input !== "" ? setIsActive(true) : setIsActive(false)
   }, [input])
 
-  function handleChange(ev: ChangeEvent<HTMLInputElement>) {
-    setInput(ev.currentTarget.value)
-  }
-
   function handleSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault()
 
-    if (input === "codeleap") {
-      nav("/posts")
+    if (input.toLowerCase() === "codeleap") {
       setError("")
-    } else {
-      setError("Empty or wrong username :(")
+      nav("/posts")
     }
+    setError("Wrong username try with codeleap :)")
   }
 
   return (
