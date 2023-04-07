@@ -2,32 +2,65 @@ import { StyledNewPost } from "."
 import { Text } from "../Text/text"
 import { Input } from "../input/input"
 import { Button } from "../button/button"
-import { useState } from "react"
+import { FormEvent, useState, useEffect } from 'react';
 
-export const NewPost = () => {
+type NewPostType = {
+  mutate: (
+    data: {
+      title: string,
+      content: string,
+      username: string
+    }
+  ) => void
+}
+
+export const NewPost = ({mutate}: NewPostType) => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [IsTitle, setIsTitle] = useState(false)
   const [isContentActive, setIsContent] = useState(false)
 
-  function handleSubmit(ev: )
+  useEffect(() => {
+    title !== "" ? setIsTitle(true) : setIsTitle(false)
+    content !== "" ? setIsContent(true) : setIsContent(false)
+  }, [content, title])
 
-  return ( 
+
+  function handleSubmit(ev: FormEvent<HTMLFormElement>) {
+    ev.preventDefault()
+    const data = {
+      username: "codeleap",
+      title,
+      content
+    }
+    mutate(data)
+
+    setTitle("")
+    setContent("")
+  }
+
+  return (
     <StyledNewPost>
       <main className="card">
-        <Text size="lg">What’s on your mind?</Text>
-        <form>
+        <Text size="lg">What is on your mind?</Text>
+
+        <form onSubmit={handleSubmit}>
           <Input
-            isActive={IsTitle}
             label="Title"
+            value={title}
+            isActive={IsTitle}
+            onChange={(ev) => setTitle(ev.currentTarget.value)}
           />
           <Input
             isContent
-            isActive={isContentActive}
             label="Content"
+            value={content}
+            isActive={isContentActive}
+            onChange={(ev) => setContent(ev.currentTarget.value)}
           />
+
           <div className="button">
-            <Button isActive={isContentActive && IsTitle ? false : true}>Create</Button>
+            <Button variant="blue" type="submit" isActive={isContentActive && IsTitle ? true : false}>Create</Button>
           </div>
         </form>
       </main>

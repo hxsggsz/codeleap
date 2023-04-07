@@ -3,8 +3,8 @@ import { Text } from "../Text/text"
 import { StyledLogin } from "./index"
 import { Input } from "../input/input"
 import { Button } from "../button/button"
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { FormEvent, useEffect, useState } from "react"
 
 export const Login = () => {
   const nav = useNavigate()
@@ -43,7 +43,7 @@ export const Login = () => {
           {error && <Text size="sm">{error}</Text>}
 
           <div className="button">
-            <Button isActive={isActive}>ENTER</Button>
+            <Button variant="blue" isActive={isActive}>ENTER</Button>
           </div>
         </form>
       </main>
