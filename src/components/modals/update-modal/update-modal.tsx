@@ -1,11 +1,11 @@
-import { Button } from "../../button/button"
 import { StyledUpdateModal } from "."
-import { useSearchParams } from "react-router-dom"
-import { Input } from "../../input/input"
 import { Text } from "../../Text/text"
-import { AnimatePresence, motion } from "framer-motion"
-import { useSelector, useDispatch } from "react-redux"
+import { Input } from "../../input/input"
+import { Button } from "../../button/button"
 import { RootState } from "../../../redux/store"
+import { useSearchParams } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { AnimatePresence, motion } from "framer-motion"
 import { handleContent, handleShowUpdate, handleTitle } from "../../../redux/sliceUpdateModal"
 
 type DeleteModalTypes = {

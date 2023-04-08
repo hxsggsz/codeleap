@@ -1,7 +1,7 @@
 import { CaretDoubleUp } from "phosphor-react"
 import { StyledButtonTop } from "."
-import { useState, useEffect, useCallback } from 'react';
-import { AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback } from "react"
+import { AnimatePresence } from "framer-motion"
 
 export const TopButton = () => {
   const [IsbackTop, setIsbackTop] = useState(false)

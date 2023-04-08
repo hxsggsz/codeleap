@@ -1,6 +1,6 @@
+import { StyledInput } from "."
+import { Text } from "../Text/text"
 import { InputHTMLAttributes } from "react"
-import { StyledInput } from ".";
-import { Text } from "../Text/text";
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   label: string

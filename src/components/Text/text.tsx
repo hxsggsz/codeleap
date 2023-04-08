@@ -1,5 +1,5 @@
-import { HTMLAttributes, ReactNode } from "react"
 import { StyledText } from "."
+import { HTMLAttributes, ReactNode } from "react"
 
 interface IText extends HTMLAttributes<HTMLHeadingElement> {
   //typescript will infer the string type correctly

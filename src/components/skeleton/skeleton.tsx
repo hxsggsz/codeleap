@@ -1,5 +1,5 @@
-import {Stack, Skeleton} from "@mui/material"
 import { StyledLoading } from "."
+import {Stack, Skeleton} from "@mui/material"
 
 export const Loading = () => {
   return (

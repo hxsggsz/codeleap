@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from "react"
 import { StyledDeleteModal } from "."
 import { Text } from "../../Text/text"
 import { Button } from "../../button/button"
-import { useSearchParams } from "react-router-dom"
-import { AnimatePresence, motion } from "framer-motion"
-import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
+import { useSearchParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { AnimatePresence, motion } from "framer-motion"
 import { handleShow } from "../../../redux/sliceDeleteModal"
 
 type DeleteModalTypes = {

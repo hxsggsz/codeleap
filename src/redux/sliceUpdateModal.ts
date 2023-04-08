@@ -21,9 +21,13 @@ const sliceUpdateModal = createSlice({
 
     handleContent(state, action) {
       return {...state, content: action.payload, isContent: state.content != "" ? true : false}
+    },
+
+    clearInput(state) {
+      return {...state, title: "", content: ""}
     }
   }
 })
 
 export default sliceUpdateModal.reducer
-export const {handleShowUpdate, handleContent, handleTitle} = sliceUpdateModal.actions
+export const {handleShowUpdate, handleContent, handleTitle, clearInput} = sliceUpdateModal.actions

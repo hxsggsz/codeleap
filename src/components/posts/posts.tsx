@@ -1,12 +1,12 @@
+import { useState } from "react"
 import { Text } from "../Text/text"
 import { StyledPost } from "./index"
+import { useDispatch } from "react-redux"
 import { useSearchParams } from "react-router-dom"
 import { Trash, NotePencil, X } from "phosphor-react"
-import { useDispatch } from "react-redux"
+import { AnimatePresence, motion } from "framer-motion"
 import { handleShow } from "../../redux/sliceDeleteModal"
 import { handleShowUpdate } from "../../redux/sliceUpdateModal"
-import { useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
 
 type PostType = {
   id: number

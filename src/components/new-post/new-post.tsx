@@ -1,8 +1,11 @@
 import { StyledNewPost } from "."
+import { FormEvent } from "react"
 import { Text } from "../Text/text"
 import { Input } from "../input/input"
 import { Button } from "../button/button"
-import { FormEvent, useState, useEffect } from 'react';
+import { RootState } from "../../redux/store"
+import { useSelector, useDispatch } from "react-redux"
+import { clearInput, handleContentInput, handleTitleInput } from "../../redux/sliceNewPost"
 
 type NewPostType = {
   mutate: (
@@ -15,28 +18,19 @@ type NewPostType = {
 }
 
 export const NewPost = ({mutate}: NewPostType) => {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [IsTitle, setIsTitle] = useState(false)
-  const [isContentActive, setIsContent] = useState(false)
-
-  useEffect(() => {
-    title !== "" ? setIsTitle(true) : setIsTitle(false)
-    content !== "" ? setIsContent(true) : setIsContent(false)
-  }, [content, title])
-
+  const dispatch = useDispatch()
+  const state = useSelector((state: RootState) => state.sliceNewPost)
 
   function handleSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault()
     const data = {
       username: "codeleap",
-      title,
-      content
+      title: state.titleInput,
+      content: state.contentInput
     }
     mutate(data)
 
-    setTitle("")
-    setContent("")
+    dispatch(clearInput())
   }
 
   return (
@@ -47,20 +41,20 @@ export const NewPost = ({mutate}: NewPostType) => {
         <form onSubmit={handleSubmit}>
           <Input
             label="Title"
-            value={title}
-            isActive={IsTitle}
-            onChange={(ev) => setTitle(ev.currentTarget.value)}
+            value={state.titleInput}
+            isActive={state.isTitleInput}
+            onChange={(ev) => dispatch(handleTitleInput(ev.currentTarget.value))}
           />
           <Input
-            isContent
+            isContent 
             label="Content"
-            value={content}
-            isActive={isContentActive}
-            onChange={(ev) => setContent(ev.currentTarget.value)}
+            value={state.contentInput}
+            isActive={state.isContentInput}
+            onChange={(ev) => dispatch(handleContentInput(ev.currentTarget.value))}
           />
 
           <div className="button">
-            <Button variant="blue" type="submit" isActive={isContentActive && IsTitle ? true : false}>Create</Button>
+            <Button variant="blue" type="submit" isActive={state.isContentInput && state.isTitleInput ? true : false}>Create</Button>
           </div>
         </form>
       </main>

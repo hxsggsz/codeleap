@@ -1,5 +1,5 @@
-import { ButtonHTMLAttributes, ReactNode } from "react"
 import { StyledButton } from "."
+import { ButtonHTMLAttributes, ReactNode } from "react"
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
