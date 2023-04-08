@@ -4,12 +4,18 @@ export const GlobalStyle = createGlobalStyle`
    :root {
     font-size: 62.5%; // 62.5% = 10px
     --white: #FFFFFF;
+    --dark-white: #777777;
     --black: #000;
     --blue: #7695EC;
+    --light-blue: #7f8fff;
+    --dark-blue: #4f649f;
     --gray: #999999;
     --red: #FF5151;
+    --light-red: #ff6851;
+    --dark-red: #b23838;
     --green: #47B960;
-    --dark-gray: #777777;
+    --light-green: #61ff84;
+    --dark-green: #296c38;
   }
 
    * {

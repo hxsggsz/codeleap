@@ -1,10 +1,10 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "../../button/button"
 import { StyledUpdateModal } from "."
 import { useSearchParams } from "react-router-dom"
-import { NewPost } from "../../new-post/new-post"
 import { Input } from "../../input/input"
 import { Text } from "../../Text/text"
+import { AnimatePresence, motion } from "framer-motion"
 
 type DeleteModalTypes = {
   isOpen: boolean
@@ -44,10 +44,16 @@ export const UpdateModal = (props: DeleteModalTypes) => {
   }
 
   return (
-    <>
+    <AnimatePresence>
       {props.isOpen && (
         <StyledUpdateModal>
-          <div className="card">
+          <motion.div
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ type: "tween" }}
+            className="card"
+          >
             <Text size="lg">What is on your mind?</Text>
 
             <Input
@@ -66,11 +72,11 @@ export const UpdateModal = (props: DeleteModalTypes) => {
 
             <div className="buttons">
               <Button onClick={handleClose} variant="white" isActive>Cancel</Button>
-              <Button onClick={handleSubmit} variant="green" isActive>Save</Button>
+              <Button onClick={handleSubmit} variant="green" isActive={isContentActive && IsTitle ? true : false }>Save</Button>
             </div>
-          </div>
+          </motion.div>
         </StyledUpdateModal>
       )}
-    </>
+    </AnimatePresence>
   )
 }

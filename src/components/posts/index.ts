@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const StyledPost = styled.section`
   width: 100%;
   max-width: 90vw;
-  
+  background: var(--white);
+  border-radius: 1.6rem;
+
   @media (min-width: 768px) {
     max-height: 31.6rem;
     max-width: 75.2rem;
@@ -19,11 +21,13 @@ export const StyledPost = styled.section`
     .icons {
       display: flex;
       gap: 1.4rem;
+      z-index: 9;
     }
   }
   
   .content {
     height: 100%;
+    cursor: pointer;
     border: .1rem solid var(--gray);
     border-radius: 0 0 1.6rem 1.6rem;
     padding: 2.4rem;
@@ -50,6 +54,6 @@ export const StyledPost = styled.section`
     display: flex;
     justify-content: space-between;
     padding-bottom: 1.6rem;
-    color: var(--dark-gray);
+    color: var(--dark-white);
   }
 `; 

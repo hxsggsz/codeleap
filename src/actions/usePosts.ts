@@ -14,11 +14,24 @@ type ChangePostTypes = {
 export const useGetAllPosts = () => {
   const posts = useQuery<IPosts>({
     queryFn: async () => {
-      const response = await api.get<IPosts>(`/careers/?limit=10&offset=0&username=`)
+      const response = await api.get<IPosts>(`/careers/?limit=10&offset=0`)
       return response.data
     },
     queryKey: ["getAllposts"],
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
+  })
+
+  return posts
+}
+
+export const useGetUniquePosts = (username: string) => {
+  const posts = useQuery<IPosts>({
+    queryFn: async () => {
+      const response = await api.get<IPosts>(`/careers/?username=${username}`)
+      return response.data
+    },
+    queryKey: ["getUniqueposts"],
+    refetchOnWindowFocus: false,
   })
 
   return posts

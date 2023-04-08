@@ -1,19 +1,22 @@
-import { Dispatch, SetStateAction } from "react"
 import { Text } from "../Text/text"
 import { StyledPost } from "./index"
-import { Trash, NotePencil } from "phosphor-react"
+import { Dispatch, SetStateAction, useCallback } from "react"
 import { useSearchParams } from "react-router-dom"
+import { Trash, NotePencil, X } from "phosphor-react"
 
 type PostType = {
   id: number
   title: string
   content: string
   username: string
+  isModal?: boolean
+  IsPostModal?: boolean
+  setIsPostModal?: Dispatch<SetStateAction<boolean>>
   created_datetime: Date
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  setIsOpenUpdate: Dispatch<SetStateAction<boolean>>
+  setIsOpen?: Dispatch<SetStateAction<boolean>>
+  setIsOpenUpdate?: Dispatch<SetStateAction<boolean>>
 }
-
+  
 export const Posts = (props: PostType) => {
   let [_, setSearchParams] = useSearchParams()
   const newDate = new Date()
@@ -22,12 +25,24 @@ export const Posts = (props: PostType) => {
   const newminute = newDate.getMinutes() - date.getMinutes()
 
   function handleDelete(id: number) {
-    props.setIsOpen(true)
+    props.setIsOpen && props.setIsOpen(true)
     setSearchParams({ delete: id.toString() })
   }
+
   function handleUpdate(id: number) {
-    props.setIsOpenUpdate(true)
+    props.setIsOpenUpdate && props.setIsOpenUpdate(true)
     setSearchParams({ update: id.toString() })
+  }
+  
+  const handleShowModal = useCallback((username: string, id: number) => {
+    props.setIsPostModal && props.setIsPostModal(true)
+    setSearchParams({ username, id: id.toString() })
+    console.log(props.IsPostModal)
+  }, []);
+  
+  function handleCloseModal() {
+    props.setIsPostModal && props.setIsPostModal(false)
+    setSearchParams({})
   }
 
   return (
@@ -36,6 +51,8 @@ export const Posts = (props: PostType) => {
         <Text size="lg">{props.title}</Text>
 
         <div className="icons">
+          {props.isModal && <X onClick={handleCloseModal} cursor="pointer" size={25} weight="bold" />}
+
           {props.username === "codeleap" && (
             <>
               <Trash onClick={() => handleDelete(props.id)} cursor="pointer" size={25} weight="bold" />
@@ -45,7 +62,7 @@ export const Posts = (props: PostType) => {
         </div>
       </div>
 
-      <div className="content">
+      <div onClick={() => handleShowModal(props.username, props.id)} className="content">
         <div className="infos">
           <Text>@{props.username}</Text>
 

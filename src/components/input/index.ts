@@ -31,7 +31,7 @@ export const StyledInput = styled.div<InputTypes>`
     height: ${({ isContent }) => isContent ? "7.4rem" : "3.2rem"};
     outline: none;
     font-size: 1.6rem;
-    border: .1rem solid var(--dark-gray);
+    border: .1rem solid var(--dark-white);
     padding-left: .5rem;
   }
 `;

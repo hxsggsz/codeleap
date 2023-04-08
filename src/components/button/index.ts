@@ -5,10 +5,6 @@ type ButtonTipes = {
   variant: "green" | "red" | "blue" | "white"
 }
 
-// function handleVariants(color: string) {
-//   return var(--color)
-// }
-
 export const StyledButton = styled.button<ButtonTipes>`
   cursor: pointer;
   background: ${({ variant }) => `var(--${variant})`};
@@ -21,9 +17,17 @@ export const StyledButton = styled.button<ButtonTipes>`
   border-radius: .8rem;
   width: 100%;
   
-  &:disabled {
+  &:disabled, &:hover:disabled {
     background: var(--gray);
     cursor: not-allowed;
+  }
+
+  &:hover {
+    background: ${({ variant }) => `var(--light-${variant})`}
+  }
+  
+  &:active {
+    background: ${({ variant }) => `var(--dark-${variant})`}
   }
 
   @media (min-width: 768px) {
