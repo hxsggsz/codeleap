@@ -34,7 +34,7 @@ export const useGetUniquePosts = (username: string) => {
       const response = await api.get<IPosts>(`/careers/?username=${username}`)
       return response.data
     },
-    queryKey: ["getUniqueposts"],
+    queryKey: ["getUniqueposts", username],
     refetchOnWindowFocus: false,
   })
 

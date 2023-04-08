@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     --dark-blue: #4f649f;
     --gray: #999999;
     --red: #FF5151;
-    --light-red: #ff6851;
+    --light-red: #ff6851; 
     --dark-red: #b23838;
     --green: #47B960;
     --light-green: #61ff84;
@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${({ theme }) => theme?.background};
+    background: var(--white);
     font-family: 'Roboto', sans-serif;
     width: 100vw;
     /* scrollbar */

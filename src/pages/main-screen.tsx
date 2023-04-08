@@ -10,30 +10,24 @@ import { NewPost } from "../components/new-post/new-post"
 import { Loading } from "../components/skeleton/skeleton"
 import { LoadingMore } from "../components/loading/loading"
 import { TopButton } from "../components/top-button/top-button"
-import { PostModal } from "../components/modals/post-modal/post-modal"
 import { DeleteModal } from "../components/modals/delete-modal/delete-modal"
 import { UpdateModal } from "../components/modals/update-modal/update-modal"
 import { useChangePost, useDeletePost, useNewPost } from "../actions/usePosts"
 
 export const MainScreen = () => {
   const { ref, inView } = useInView()
-  let [searchParams, setSearchParams] = useSearchParams()
+  let [searchParams, _] = useSearchParams()
   const newId = searchParams.get('update')
-  const [isOpen, setIsOpen] = useState(false)
-  const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const { mutate } = useNewPost()
   const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useGetAllPosts()
   const { mutate: deletePost } = useDeletePost()
   const { mutate: changePost } = useChangePost(newId!)
-  
-  
+
   useEffect(() => {
     if (inView) {
       fetchNextPage()
     }
   }, [inView])
-
-  
 
   return (
     <>
@@ -45,7 +39,7 @@ export const MainScreen = () => {
         transition={{ type: "tween" }}
       >
         <NewPost mutate={mutate} />
-        <PostModal />
+
         {isLoading || isFetching ? <Loading /> : data?.pages.map(post =>
           post.results.map(result => (
             (

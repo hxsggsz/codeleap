@@ -5,7 +5,8 @@ import { Trash, NotePencil, X } from "phosphor-react"
 import { useDispatch } from "react-redux"
 import { handleShow } from "../../redux/sliceDeleteModal"
 import { handleShowUpdate } from "../../redux/sliceUpdateModal"
-import { handleShowPostModal } from "../../redux/slicePostModal"
+import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 
 type PostType = {
   id: number
@@ -15,11 +16,12 @@ type PostType = {
   isModal?: boolean
   created_datetime: Date
 }
-  
+
 export const Posts = (props: PostType) => {
+  const [selectedId, setSelectedId] = useState<string | null>(null)
   let [_, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
-  
+
   const newDate = new Date()
   const date = new Date(props.created_datetime)
   const newHour = newDate.getHours() - date.getHours()
@@ -34,49 +36,72 @@ export const Posts = (props: PostType) => {
     dispatch(handleShowUpdate())
     setSearchParams({ update: id.toString() })
   }
-  
-  function handleShowModal(username: string, id: number) {
-    dispatch(handleShowPostModal())
-    setSearchParams({ username, id: id.toString() })
-  }
-  function handleClosePostModal() {
-    dispatch(handleShowPostModal())
-    setSearchParams({})
-  }
-  
-  function handleCloseModal() {
-    dispatch(handleShow())
-    setSearchParams({})
-  }
 
   return (
-    <StyledPost>
-      <div className="header">
-        <Text size="lg">{props.title}</Text>
+    <>
+      <StyledPost layoutId={props.id.toString()}>
+        <motion.div className="header">
+          <Text size="lg">{props.title}</Text>
 
-        <div className="icons">
-          {props.isModal && <X onClick={handleClosePostModal} cursor="pointer" size={25} weight="bold" />}
+          <motion.div className="icons">
+            {props.username === "codeleap" && (
+              <>
+                <Trash onClick={() => handleDelete(props.id)} cursor="pointer" size={25} weight="bold" />
+                <NotePencil onClick={() => handleUpdate(props.id)} cursor="pointer" size={25} weight="bold" />
+              </>
+            )}
+          </motion.div>
+        </motion.div>
 
-          {props.username === "codeleap" && (
-            <>
-              <Trash onClick={() => handleDelete(props.id)} cursor="pointer" size={25} weight="bold" />
-              <NotePencil onClick={() => handleUpdate(props.id)} cursor="pointer" size={25} weight="bold" />
-            </>
-          )}
-        </div>
-      </div>
+        <motion.div onClick={() => setSelectedId(props.id.toString())} className="content">
+          <motion.div className="infos">
+            <Text>@{props.username}</Text>
 
-      <div onClick={() => handleShowModal(props.username, props.id)} className="content">
-        <div className="infos">
-          <Text>@{props.username}</Text>
+            <Text>{newHour !== 0 ? `${newHour} hours ago` : `${newminute} minutes ago`}</Text>
+          </motion.div>
 
-          <Text>{newHour !== 0 ? `${newHour} hours ago` : `${newminute} minutes ago`}</Text>
-        </div>
+          <motion.div className="text">
+            <Text>{props.content}</Text>
+          </motion.div>
+        </motion.div>
+      </StyledPost>
 
-        <div className="text">
-          <Text>{props.content}</Text>
-        </div>
-      </div>
-    </StyledPost>
+        {selectedId && (
+      <AnimatePresence>
+          <StyledPost >
+            <motion.div className="shadow" >
+              <motion.div layoutId={selectedId}>
+                <motion.div className="header">
+                  <Text size="lg">{props.title}</Text>
+
+                  <motion.div className="icons">
+                    <X onClick={() => setSelectedId(null)} cursor="pointer" size={25} weight="bold" />
+
+                    {props.username === "codeleap" && (
+                      <>
+                        <Trash onClick={() => handleDelete(props.id)} cursor="pointer" size={25} weight="bold" />
+                        <NotePencil onClick={() => handleUpdate(props.id)} cursor="pointer" size={25} weight="bold" />
+                      </>
+                    )}
+                  </motion.div>
+                </motion.div>
+
+                <motion.div className="content">
+                  <motion.div className="infos">
+                    <Text>@{props.username}</Text>
+
+                    <Text>{newHour !== 0 ? `${newHour} hours ago` : `${newminute} minutes ago`}</Text>
+                  </motion.div>
+
+                  <motion.div className="text">
+                    <Text>{props.content}</Text>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </StyledPost>
+      </AnimatePresence>
+        )}
+    </>
   )
 }

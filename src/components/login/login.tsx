@@ -23,7 +23,7 @@ export const Login = () => {
       setError("")
       nav("/posts")
     }
-    setError("Wrong username try with codeleap :)")
+    setError("Wrong username, try with codeleap :)")
   }
 
   return (
