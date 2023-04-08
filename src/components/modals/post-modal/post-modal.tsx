@@ -3,13 +3,16 @@ import { StyledPostModal } from "."
 import { useGetUniquePosts } from "../../../actions/usePosts"
 import { Posts } from "../../posts/posts"
 import { useMemo, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { RootState } from "../../../redux/store"
 
 export const PostModal = () => {
   let [searchParams, _] = useSearchParams()
-  const [IsPostModal, setIsPostModal] = useState(false)
   const id = searchParams.get("id")
   const username = searchParams.get("username")
   const { data } = useGetUniquePosts(username!)
+  const { isOpen } = useSelector((state: RootState) => state.slicePostModal)
+  
 
   const post = useMemo(() => {
     if (data) {
@@ -19,7 +22,7 @@ export const PostModal = () => {
 
   return (
     <>
-      {IsPostModal && (
+      {isOpen && (
         <StyledPostModal>
           {post && (
             <Posts
@@ -29,8 +32,6 @@ export const PostModal = () => {
               title={post.title}
               content={post.content}
               username={post.username}
-              IsPostModal={IsPostModal}
-              setIsPostModal={setIsPostModal}
               created_datetime={post.created_datetime}
             />
           )}

@@ -4,20 +4,30 @@ import { Text } from "../../Text/text"
 import { Button } from "../../button/button"
 import { useSearchParams } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../../redux/store"
+import { handleShow } from "../../../redux/sliceDeleteModal"
 
 type DeleteModalTypes = {
-  isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  deletePost: () => void
+  deletePost(id: string): void
 }
 
-export const DeleteModal = ({ isOpen, setIsOpen, deletePost }: DeleteModalTypes) => {
-  let [_, setSearchParams] = useSearchParams()
+export const DeleteModal = ({ deletePost }: DeleteModalTypes) => {
+  let [searchParams, setSearchParams] = useSearchParams()
+  const id = searchParams.get("delete")
+  const { isOpen } = useSelector((state: RootState) => state.sliceDeleteModal)
+  const dispatch = useDispatch()
 
   function handleClose() {
-    setIsOpen(false)
+    dispatch(handleShow())
     setSearchParams({})
   }
+  function handleDeletePost() {
+    deletePost(id!)
+    dispatch(handleShow())
+    setSearchParams({})
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -33,7 +43,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, deletePost }: DeleteModalTypes)
 
             <div className="buttons">
               <Button onClick={handleClose} variant="white" isActive>Cancel</Button>
-              <Button onClick={deletePost} variant="red" isActive>Delete</Button>
+              <Button onClick={handleDeletePost} variant="red" isActive>Delete</Button>
             </div>
           </motion.div>
         </StyledDeleteModal>

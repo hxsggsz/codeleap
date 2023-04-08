@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
    :root {
-    font-size: 62.5%; // 62.5% = 10px
+    font-size: 62.5%; // 1rem = 10px
     --white: #FFFFFF;
     --dark-white: #777777;
     --black: #000;
@@ -25,6 +25,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background: ${({ theme }) => theme?.background};
     font-family: 'Roboto', sans-serif;
     width: 100vw;
     /* scrollbar */

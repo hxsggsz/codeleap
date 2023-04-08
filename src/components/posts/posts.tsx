@@ -1,8 +1,11 @@
 import { Text } from "../Text/text"
 import { StyledPost } from "./index"
-import { Dispatch, SetStateAction, useCallback } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Trash, NotePencil, X } from "phosphor-react"
+import { useDispatch } from "react-redux"
+import { handleShow } from "../../redux/sliceDeleteModal"
+import { handleShowUpdate } from "../../redux/sliceUpdateModal"
+import { handleShowPostModal } from "../../redux/slicePostModal"
 
 type PostType = {
   id: number
@@ -10,38 +13,39 @@ type PostType = {
   content: string
   username: string
   isModal?: boolean
-  IsPostModal?: boolean
-  setIsPostModal?: Dispatch<SetStateAction<boolean>>
   created_datetime: Date
-  setIsOpen?: Dispatch<SetStateAction<boolean>>
-  setIsOpenUpdate?: Dispatch<SetStateAction<boolean>>
 }
   
 export const Posts = (props: PostType) => {
   let [_, setSearchParams] = useSearchParams()
+  const dispatch = useDispatch()
+  
   const newDate = new Date()
   const date = new Date(props.created_datetime)
   const newHour = newDate.getHours() - date.getHours()
   const newminute = newDate.getMinutes() - date.getMinutes()
 
   function handleDelete(id: number) {
-    props.setIsOpen && props.setIsOpen(true)
+    dispatch(handleShow())
     setSearchParams({ delete: id.toString() })
   }
 
   function handleUpdate(id: number) {
-    props.setIsOpenUpdate && props.setIsOpenUpdate(true)
+    dispatch(handleShowUpdate())
     setSearchParams({ update: id.toString() })
   }
   
-  const handleShowModal = useCallback((username: string, id: number) => {
-    props.setIsPostModal && props.setIsPostModal(true)
+  function handleShowModal(username: string, id: number) {
+    dispatch(handleShowPostModal())
     setSearchParams({ username, id: id.toString() })
-    console.log(props.IsPostModal)
-  }, []);
+  }
+  function handleClosePostModal() {
+    dispatch(handleShowPostModal())
+    setSearchParams({})
+  }
   
   function handleCloseModal() {
-    props.setIsPostModal && props.setIsPostModal(false)
+    dispatch(handleShow())
     setSearchParams({})
   }
 
@@ -51,7 +55,7 @@ export const Posts = (props: PostType) => {
         <Text size="lg">{props.title}</Text>
 
         <div className="icons">
-          {props.isModal && <X onClick={handleCloseModal} cursor="pointer" size={25} weight="bold" />}
+          {props.isModal && <X onClick={handleClosePostModal} cursor="pointer" size={25} weight="bold" />}
 
           {props.username === "codeleap" && (
             <>

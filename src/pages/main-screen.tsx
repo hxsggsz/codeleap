@@ -25,7 +25,7 @@ export const MainScreen = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useGetAllPosts()
   const { mutate: deletePost } = useDeletePost()
   const { mutate: changePost } = useChangePost(newId!)
-  const id = searchParams.get("delete")
+  
   
   useEffect(() => {
     if (inView) {
@@ -33,11 +33,7 @@ export const MainScreen = () => {
     }
   }, [inView])
 
-  function handleDeletePost(id: string) {
-    deletePost(id)
-    setIsOpen(false)
-    setSearchParams({})
-  }
+  
 
   return (
     <>
@@ -58,23 +54,15 @@ export const MainScreen = () => {
                 key={result.id}
                 id={result.id}
                 title={result.title}
-                setIsOpen={setIsOpen}
                 content={result.content}
                 username={result.username}
-                setIsOpenUpdate={setIsOpenUpdate}
                 created_datetime={result.created_datetime}
               />
             )
           )))}
-        <DeleteModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          deletePost={() => handleDeletePost(id!)}
-        />
-        <UpdateModal
-          isOpen={isOpenUpdate}
-          setIsOpen={setIsOpenUpdate} mutate={changePost}
-        />
+        <DeleteModal deletePost={deletePost} />
+
+        <UpdateModal mutate={changePost} />
         <TopButton />
         <div ref={ref}>{isFetching && <LoadingMore />}</div>
         <Text size="lg" >{!hasNextPage && !isLoading && "Congrats!, you have been seen all content!🤯"}</Text>

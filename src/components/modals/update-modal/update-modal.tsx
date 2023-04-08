@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "../../button/button"
 import { StyledUpdateModal } from "."
 import { useSearchParams } from "react-router-dom"
 import { Input } from "../../input/input"
 import { Text } from "../../Text/text"
 import { AnimatePresence, motion } from "framer-motion"
+import { useSelector, useDispatch } from "react-redux"
+import { RootState } from "../../../redux/store"
+import { handleContent, handleShowUpdate, handleTitle } from "../../../redux/sliceUpdateModal"
 
 type DeleteModalTypes = {
-  isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
   mutate: (
     data: {
       title: string,
@@ -17,35 +17,29 @@ type DeleteModalTypes = {
   ) => void
 }
 
-export const UpdateModal = (props: DeleteModalTypes) => {
+export const UpdateModal = ({ mutate }: DeleteModalTypes) => {
   let [_, setSearchParams] = useSearchParams()
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [IsTitle, setIsTitle] = useState(false)
-  const [isContentActive, setIsContent] = useState(false)
-
-  useEffect(() => {
-    title !== "" ? setIsTitle(true) : setIsTitle(false)
-    content !== "" ? setIsContent(true) : setIsContent(false)
-  }, [content, title])
+  const state = useSelector((state: RootState) => state.sliceUpdateModal)
+  const dispatch = useDispatch()
 
   function handleClose() {
-    props.setIsOpen(false)
+    dispatch(handleShowUpdate())
     setSearchParams({})
   }
 
   function handleSubmit() {
     const data = {
-      title,
-      content
+      title: state.title,
+      content: state.content,
     }
-    props.mutate(data)
-    handleClose()
+    mutate(data)
+    setSearchParams({})
+    dispatch(handleShowUpdate())
   }
 
   return (
     <AnimatePresence>
-      {props.isOpen && (
+      {state.isOpen && (
         <StyledUpdateModal>
           <motion.div
             initial={{ y: -100, opacity: 0 }}
@@ -58,21 +52,21 @@ export const UpdateModal = (props: DeleteModalTypes) => {
 
             <Input
               label="Title"
-              value={title}
-              isActive={IsTitle}
-              onChange={(ev) => setTitle(ev.currentTarget.value)}
+              value={state.title}
+              isActive={state.isTitle}
+              onChange={(ev) => dispatch(handleTitle(ev.currentTarget.value))}
             />
             <Input
               isContent
               label="Content"
-              value={content}
-              isActive={isContentActive}
-              onChange={(ev) => setContent(ev.currentTarget.value)}
+              value={state.content}
+              isActive={state.isContent}
+              onChange={(ev) => dispatch(handleContent(ev.currentTarget.value))}
             />
 
             <div className="buttons">
               <Button onClick={handleClose} variant="white" isActive>Cancel</Button>
-              <Button onClick={handleSubmit} variant="green" isActive={isContentActive && IsTitle ? true : false }>Save</Button>
+              <Button onClick={handleSubmit} variant="green" isActive={state.isContent && state.isTitle ? true : false}>Save</Button>
             </div>
           </motion.div>
         </StyledUpdateModal>
