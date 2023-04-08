@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
+import { Text } from "../components/Text/text"
 import { Posts } from "../components/posts/posts"
 import { useSearchParams } from "react-router-dom"
 import { StyledPosts } from "../styles/mainScreen"
 import { useGetAllPosts } from "../actions/usePosts"
 import { Header } from "../components/header/header"
+import { useInView } from "react-intersection-observer"
 import { NewPost } from "../components/new-post/new-post"
 import { Loading } from "../components/skeleton/skeleton"
+import { LoadingMore } from "../components/loading/loading"
+import { TopButton } from "../components/top-button/top-button"
 import { PostModal } from "../components/modals/post-modal/post-modal"
 import { DeleteModal } from "../components/modals/delete-modal/delete-modal"
 import { UpdateModal } from "../components/modals/update-modal/update-modal"
 import { useChangePost, useDeletePost, useNewPost } from "../actions/usePosts"
-import { useInView } from "react-intersection-observer"
 
 export const MainScreen = () => {
   const { ref, inView } = useInView()
@@ -19,7 +22,7 @@ export const MainScreen = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const { mutate } = useNewPost()
-  const { data, fetchNextPage, isFetchingNextPage, isLoading, isFetching } = useGetAllPosts()
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useGetAllPosts()
   const { mutate: deletePost } = useDeletePost()
   const { mutate: changePost } = useChangePost(newId!)
   const id = searchParams.get("delete")
@@ -72,7 +75,9 @@ export const MainScreen = () => {
           isOpen={isOpenUpdate}
           setIsOpen={setIsOpenUpdate} mutate={changePost}
         />
-        <div ref={ref}>{isFetchingNextPage && "loading more"}</div>
+        <TopButton />
+        <div ref={ref}>{isFetching && <LoadingMore />}</div>
+        <Text size="lg" >{!hasNextPage && !isLoading && "Congrats!, you have been seen all content!🤯"}</Text>
       </StyledPosts>
     </>
   )
