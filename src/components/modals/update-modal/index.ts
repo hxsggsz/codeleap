@@ -12,12 +12,18 @@ export const StyledUpdateModal = styled.div`
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
 
+  
+
   .card {
     background: var(--white);
     padding: 2.4rem;
     border: .1rem solid var(--gray);
     border-radius: 1.6rem;
-    min-width: 66rem;
+    
+    width: 66rem;
+    @media (max-width: 690px) {
+      max-width: 80vw;
+    }
   }
 
   .buttons {

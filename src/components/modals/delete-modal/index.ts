@@ -17,7 +17,11 @@ export const StyledDeleteModal = styled.div`
     padding: 2.4rem;
     border: .1rem solid var(--gray);
     border-radius: 1.6rem;
-    min-width: 66rem;
+    width: 66rem;
+    
+    @media (max-width: 690px) {
+      max-width: 80vw;
+    }
   }
 
   .buttons {
