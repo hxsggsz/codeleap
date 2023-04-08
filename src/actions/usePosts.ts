@@ -1,4 +1,4 @@
-import { useQueryClient, useMutation, useQuery } from "react-query";
+import { useQueryClient, useMutation, useQuery, useInfiniteQuery } from "react-query";
 import { api } from "./api/api";
 
 type NewPostTypes = {
@@ -12,13 +12,17 @@ type ChangePostTypes = {
 }
 
 export const useGetAllPosts = () => {
-  const posts = useQuery<IPosts>({
-    queryFn: async () => {
-      const response = await api.get<IPosts>(`/careers/?limit=10&offset=0`)
+  const posts = useInfiniteQuery<IPosts>({
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await api.get<IPosts>(`/careers/?limit=10&offset=${pageParam}0`)
       return response.data
     },
     queryKey: ["getAllposts"],
     refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1
+      return nextPage 
+    }
   })
 
   return posts

@@ -9,5 +9,5 @@ export const StyledPosts = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20rem;
+  /* margin-bottom: 20rem; */
 `;
