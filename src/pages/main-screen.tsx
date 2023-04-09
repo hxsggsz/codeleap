@@ -19,7 +19,7 @@ export const MainScreen = () => {
   let [searchParams, _] = useSearchParams()
   const newId = searchParams.get('update')
   const { mutate } = useNewPost()
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = useGetAllPosts()
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isFetching } = useGetAllPosts()
   const { mutate: deletePost } = useDeletePost()
   const { mutate: changePost } = useChangePost(newId!)
 
@@ -40,7 +40,7 @@ export const MainScreen = () => {
       >
         <NewPost mutate={mutate} />
 
-        {isLoading || isFetching ? <Loading /> : data?.pages.map(post =>
+        {isLoading ? <Loading /> : data?.pages.map(post =>
           post.results.map(result => (
             (
 
