@@ -8,6 +8,8 @@
     CodeLeap
 </h1>
 
+# Try it out! https://codeleap-hxsggsz.netlify.app/
+
 <p align="center">
 <a href="#about-the-project">About The Project</a>
 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
