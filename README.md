@@ -14,10 +14,7 @@
 <a href="#about-the-project">About The Project</a>
 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#built-with">Built With</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
- <a href="#usage">Usage</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
  <a href="#project-tree">Project Tree</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
- <a href="#usage">Acknowledgments</a>&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 </div>
 
